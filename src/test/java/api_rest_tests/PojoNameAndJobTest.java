@@ -1,31 +1,26 @@
-package api_rest;
+package api_rest_tests;
 
+import models.pojo.JobAndNameModel;
+import models.pojo.JobAndNameResponseModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class simpleTest {
-
-    @Test
-    void checkUnknownNameWithSomeLogs() {
-        given()
-                .log().uri()
-                .get("https://reqres.in/api/unknown/2")
-                .then()
-                .log().body()
-                .body("data.name", is("fuchsia rose"));
-    }
-
+public class PojoNameAndJobTest {
     @Test
     void successJobChangeTest() {
-        String authData = "{\"name\": \"morpheus\", \"job\": \"zion resident\"}";
+        // String authData = "{\"name\": \"morpheus\", \"job\": \"zion resident\"}";
+        JobAndNameModel authData = new JobAndNameModel();
+        authData.setName("morpheus");
+        authData.setJob("zion resident");
 
-
-        given()
+        JobAndNameResponseModel response = given()
                 .body(authData)
                 .contentType(JSON)
                 .log().uri()
@@ -37,7 +32,10 @@ public class simpleTest {
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .body("job", is("zion resident"));
+                .extract().as(JobAndNameResponseModel.class);
+        // assertThat(userBody.getJob()).isEqualTo(response.getJob());
+        assertEquals("morpheus", response.getName() );
+        assertEquals("zion resident", response.getJob() );
     }
 
     @Test
@@ -120,5 +118,4 @@ public class simpleTest {
 
 
     }
-
 }

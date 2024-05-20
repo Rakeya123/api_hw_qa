@@ -1,9 +1,21 @@
 package models.pojo;
 
 public class JobAndNameResponseModel {
-    // String authData = "{\"name\": \"morpheus\", \"job\": \"zion resident\"}";
-    String name, job, updatedAt;
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
 
     public String getUpdatedAt() {
         return updatedAt;
@@ -13,15 +25,10 @@ public class JobAndNameResponseModel {
         this.updatedAt = updatedAt;
     }
 
-    public String getName() {
-        return name;
-    }
+    // String authData = "{\"name\": \"morpheus\", \"job\": \"zion resident\"}";
+    String name, job, updatedAt;
 
 
-
-    public String getJob() {
-        return job;
-    }
 
 
 

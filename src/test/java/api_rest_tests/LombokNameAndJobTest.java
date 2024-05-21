@@ -12,81 +12,117 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static specs.SetNameAndJobSpec.nameAndJobRequestSpec;
 
 public class LombokNameAndJobTest extends TestBase {
 
-    @DisplayName("Checking the successful user update with put method")
+    @DisplayName("Checking the successful user Name and Job update with put method")
     @Test
-
     void successNameAndJobJobChangeTest() {
 
         JobAndNameLombokModel bodyParams = new JobAndNameLombokModel();
         bodyParams.setName("morpheus");
         bodyParams.setJob("zion resident");
 
-        JobAndNameResponseLombokModel response = step("Make request", ()->
-               given(nameAndJobRequestSpec)
+        JobAndNameResponseLombokModel response = step("Make request", () ->
+                given(nameAndJobRequestSpec)
 
-                .body(bodyParams)
+                        .body(bodyParams)
 
 
+                        .when()
+                        .put()
 
-                .when()
-                .put()
-
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .extract().as(JobAndNameResponseLombokModel.class));
-        step("Check response Name", ()->
-        assertEquals("morpheus", response.getName()) );
-        step("Check response Job", ()->
-        assertEquals("zion resident", response.getJob() ));
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().as(JobAndNameResponseLombokModel.class));
+        step("Check response Name", () ->
+                assertEquals("morpheus", response.getName()));
+        step("Check response Job", () ->
+                assertEquals("zion resident", response.getJob()));
     }
 
+    @DisplayName("Checking the successful user Name update with put method")
     @Test
     void successNameChangeTest() {
-        String authData = "{\"name\": \"morpheus1\", \"job\": \"zion resident\"}";
+        // String authData = "{\"name\": \"morpheus1\", \"job\": \"zion resident\"}";
+        JobAndNameLombokModel bodyParams = new JobAndNameLombokModel();
+        bodyParams.setName("morpheus");
+
+        JobAndNameResponseLombokModel response = step("Make request", () ->
+                given(nameAndJobRequestSpec)
 
 
-        given()
-                .body(authData)
-                .contentType(JSON)
-                .log().uri()
+                        .body(bodyParams)
 
-                .when()
-                .put("https://reqres.in/api/users/2")
+                        .when()
+                        .put()
 
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .body("name", is("morpheus1"));
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().as(JobAndNameResponseLombokModel.class));
+        step("Check response Name", () ->
+                assertEquals("morpheus", response.getName()));
     }
 
+    @DisplayName("Checking nullValue user Name with put method")
     @Test
     void notNameChangeTest() {
-        String authData = "{\"job\": \"zion resident\"}";
+
+        JobAndNameLombokModel bodyParams = new JobAndNameLombokModel();
+        bodyParams.setJob("zion resident");
+
+        JobAndNameResponseLombokModel response = step("Make request", () ->
+                given(nameAndJobRequestSpec)
 
 
-        given()
-                .body(authData)
-                .contentType(JSON)
-                .log().uri()
+                        .body(bodyParams)
 
-                .when()
-                .put("https://reqres.in/api/users/2")
+                        .when()
+                        .put()
 
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .body("name", nullValue());
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().as(JobAndNameResponseLombokModel.class));
+        step("Check response null Name ", () ->
+                //   assertEquals(nullValue(), response.getName()));
+                assertNull(response.getName()));
+    }
+               // .body("name", nullValue());
+
+    @DisplayName("Checking Job not nullValue")
+    @Test
+    void jobIsNotNullTestAllure() {
+        JobAndNameLombokModel bodyParams = new JobAndNameLombokModel();
+        bodyParams.setJob("zion resident");
+
+        JobAndNameResponseLombokModel response = step("Make request", () ->
+                given(nameAndJobRequestSpec)
+
+
+                        .body(bodyParams)
+
+                        .when()
+                        .put()
+
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .extract().as(JobAndNameResponseLombokModel.class));
+        step("Check response Job not null  ", () ->
+                assertNotNull(response.getJob()));
+
     }
 
+    @DisplayName("Checking Job not nullValue")
     @Test
     void jobIsNotNullTest() {
         String authData = "{\"job\": \"zion resident\"}";
@@ -108,23 +144,4 @@ public class LombokNameAndJobTest extends TestBase {
 
     }
 
-    @Test
-    void listDataIdTest() {
-
-        var request = given()
-                .contentType(JSON)
-                .log().uri()
-                .when();
-
-        var response = request.get("https://reqres.in/api/unknown");
-
-        var validateResponse = response.then();
-        validateResponse
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .body("data.id", is(List.of(1, 2, 3, 4, 5, 6)));
-
-
-    }
 }

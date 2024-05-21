@@ -12,4 +12,9 @@ public class SetNameAndJobSpec {
             .log().all()
             .contentType(JSON);
 
+    public static RequestSpecification ListDataIdRequestSpec = with()
+            .filter(withCustomTemplates())
+            .log().all()
+            .contentType(JSON);
+
 }

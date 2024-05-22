@@ -1,7 +1,5 @@
 package api_rest_tests;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
 import models.lombok.IdDataModel;
 import models.lombok.IdModelDataItem;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,10 +16,6 @@ import static specs.SetNameAndJobSpec.ListDataIdRequestSpec;
 
 public class ListDataIdTest {
 
-@BeforeAll static void setup() {
-    SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
-    }
     @Test
     void listDataIdTestAllure() {
         List<Integer> result =
@@ -74,31 +68,5 @@ public class ListDataIdTest {
 //
 //
 //    }
-    @Test
-    void listDataIdTest() {
 
-
-                    var response = given(ListDataIdRequestSpec)
-
-
-                            .when()
-                            .get("https://reqres.in/api/unknown/")
-
-                            .then()
-                            .log().status()
-                            .log().body()
-                            .statusCode(200)
-                            .extract().as(IdDataModel.class);
-
-                    List<Integer> ids = new ArrayList<>();
-                    for (IdModelDataItem item : response.getData()) {
-                        ids.add(item.getId());
-                    }
-        List<Integer> result = ids;
-                    // return   response.getData().stream().map(IdModelDataItem::getId).toList();
-
-
-
-                assertEquals(result, List.of(1, 2, 3, 4, 5, 6));
-    }
 }

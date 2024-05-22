@@ -1,43 +1,49 @@
 package api_rest_tests;
 
 import io.restassured.RestAssured;
-import models.lombok.JobAndNameResponseLombokModel;
+import models.lombok.IdDataModel;
+import models.lombok.IdModelDataItem;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.SetNameAndJobSpec.ListDataIdRequestSpec;
-import static specs.SetNameAndJobSpec.nameAndJobRequestSpec;
 
 public class ListDataIdTest {
 
     @BeforeAll
     static void setUpConfig() {
         RestAssured.baseURI = "https://reqres.in";
-        RestAssured.basePath = "/api/users/unknown";
+        RestAssured.basePath = "/api/unknown";
     }
     @Test
     void listDataIdTestAllure() {
+AtomicReference<List<Integer>> result = new AtomicReference<>();
+       step("Make request", () -> {
+        var response =    given(ListDataIdRequestSpec)
 
-       step("Make request", () ->
-                       given(ListDataIdRequestSpec)
 
+                   .when()
+                   .get()
 
-                               .when()
-                               .get(("https://reqres.in/api/unknown"))
+                   .then()
+                   .log().status()
+                   .log().body()
+                   .statusCode(200)
+                .extract().as(IdDataModel.class);
 
-                               .then()
-                               .log().status()
-                               .log().body()
-                               .statusCode(200));
+           result.set(response.getData().stream().map(IdModelDataItem::getId).toList());
+
+       });
+
         step("Check list of Date", () ->
-                assertEquals("[1, 2, 3, 4, 5, 6]", is(List.of(1, 2, 3, 4, 5, 6))));
+                assertEquals(result.get(),List.of(1, 2, 3, 4, 5, 6)));
     }
 
 //                .body("data.id", is(List.of(1, 2, 3, 4, 5, 6)));

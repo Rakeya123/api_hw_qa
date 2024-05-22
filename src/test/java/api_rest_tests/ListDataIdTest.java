@@ -20,8 +20,10 @@ public class ListDataIdTest {
 
     @BeforeAll
     static void setUpConfig() {
-        RestAssured.baseURI = "https://reqres.in";
-        RestAssured.basePath = "/api/unknown";
+
+            step("Set Base URI", () -> RestAssured.baseURI = "https://reqres.in");
+            step("Set Base Path", () -> RestAssured.basePath = "/api/unknown");
+
     }
 
     @Test

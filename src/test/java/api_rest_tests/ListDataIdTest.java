@@ -30,7 +30,7 @@ public class ListDataIdTest {
 
 
                             .when()
-                            .get("https://reqres.in/api/unknown")
+                            .get("https://reqres.in/api/unknown/")
 
                             .then()
                             .log().status()
@@ -82,7 +82,7 @@ public class ListDataIdTest {
 
 
                             .when()
-                            .get("https://reqres.in/api/unknown")
+                            .get("https://reqres.in/api/unknown/")
 
                             .then()
                             .log().status()

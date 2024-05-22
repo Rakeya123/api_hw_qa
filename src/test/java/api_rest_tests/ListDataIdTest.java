@@ -18,13 +18,7 @@ import static specs.SetNameAndJobSpec.ListDataIdRequestSpec;
 
 public class ListDataIdTest {
 
-    @BeforeAll
-    static void setUpConfig() {
 
-            step("Set Base URI", () -> RestAssured.baseURI = "https://reqres.in");
-            step("Set Base Path", () -> RestAssured.basePath = "/api/unknown");
-
-    }
 
     @Test
     void listDataIdTestAllure() {

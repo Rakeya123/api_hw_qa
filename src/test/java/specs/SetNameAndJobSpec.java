@@ -8,12 +8,12 @@ import static io.restassured.http.ContentType.JSON;
 import static io.restassured.RestAssured.with;
 public class SetNameAndJobSpec {
     public static RequestSpecification nameAndJobRequestSpec = with()
-           // .filter(withCustomTemplates())
+          .filter(withCustomTemplates())
             .log().all()
             .contentType(JSON);
 
     public static RequestSpecification ListDataIdRequestSpec = with()
-            //.filter(withCustomTemplates())
+            .filter(withCustomTemplates())
             .log().all()
             .contentType(JSON);
 

@@ -31,7 +31,10 @@ dependencies {
             "io.qameta.allure:allure-rest-assured:$allureVersion",
             "org.junit.jupiter:junit-jupiter:5.10.0",
             "org.slf4j:slf4j-simple:2.0.12",
-            "org.assertj:assertj-core:3.6.1"
+            "org.assertj:assertj-core:3.6.1",
+            "io.qameta.allure:allure-selenide:2.27.0",
+            "com.codeborne:selenide:7.2.1",
+
 
     )
 }

@@ -1,7 +1,10 @@
 package api_rest_tests;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import models.lombok.IdDataModel;
 import models.lombok.IdModelDataItem;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,9 +15,13 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.SetNameAndJobSpec.ListDataIdRequestSpec;
 
+
 public class ListDataIdTest {
 
+@BeforeAll static void setup() {
+    SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
+    }
     @Test
     void listDataIdTestAllure() {
         List<Integer> result =

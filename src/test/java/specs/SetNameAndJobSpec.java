@@ -13,7 +13,7 @@ public class SetNameAndJobSpec {
             .contentType(JSON);
 
     public static RequestSpecification ListDataIdRequestSpec = with()
-            //.filter(withCustomTemplates())
+            .filter(withCustomTemplates())
             .log().all()
             .contentType(JSON);
 

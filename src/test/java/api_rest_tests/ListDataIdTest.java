@@ -6,6 +6,7 @@ import models.lombok.IdModelDataItem;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -22,34 +23,40 @@ public class ListDataIdTest {
         RestAssured.baseURI = "https://reqres.in";
         RestAssured.basePath = "/api/unknown";
     }
+
     @Test
     void listDataIdTestAllure() {
-AtomicReference<List<Integer>> result = new AtomicReference<>();
-       step("Make request", () -> {
-        var response =    given(ListDataIdRequestSpec)
+        List<Integer> result =
+                step("Make request", () -> {
+                    var response = given(ListDataIdRequestSpec)
 
 
-                   .when()
-                   .get("https://reqres.in/api/unknown")
+                            .when()
+                            .get("https://reqres.in/api/unknown")
 
-                   .then()
-                   .log().status()
-                   .log().body()
-                   .statusCode(200)
-                .extract().as(IdDataModel.class);
+                            .then()
+                            .log().status()
+                            .log().body()
+                            .statusCode(200)
+                            .extract().as(IdDataModel.class);
 
-           result.set(response.getData().stream().map(IdModelDataItem::getId).toList());
+                    List<Integer> ids = new ArrayList<>();
+                    for (IdModelDataItem item : response.getData()) {
+                        ids.add(item.getId());
+                    }
+                    return ids;
+                    // return   response.getData().stream().map(IdModelDataItem::getId).toList();
 
-       });
+                });
 
         step("Check list of Date", () ->
-                assertEquals(result.get(),List.of(1, 2, 3, 4, 5, 6)));
+                assertEquals(result, List.of(1, 2, 3, 4, 5, 6)));
     }
 
 //                .body("data.id", is(List.of(1, 2, 3, 4, 5, 6)));
 //
 
-    }
+}
 //    @Test
 //    void listDataIdTest() {
 //

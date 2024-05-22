@@ -30,7 +30,7 @@ AtomicReference<List<Integer>> result = new AtomicReference<>();
 
 
                    .when()
-                   .get()
+                   .get("https://reqres.in/api/unknown")
 
                    .then()
                    .log().status()

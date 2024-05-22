@@ -1,8 +1,10 @@
 package api_rest_tests;
 
+import io.restassured.RestAssured;
 import models.lombok.JobAndNameLombokModel;
 
 import models.lombok.JobAndNameResponseLombokModel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +17,12 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static specs.SetNameAndJobSpec.nameAndJobRequestSpec;
 
-public class LombokNameAndJobTest extends TestBase {
+public class LombokNameAndJobTest {
+    @BeforeEach
+    void setUpConfig() {
+        RestAssured.baseURI = "https://reqres.in";
+        RestAssured.basePath = "/api/users/2";
+    }
 
     @DisplayName("Checking the successful user Name and Job update with put method")
     @Test
@@ -32,7 +39,7 @@ public class LombokNameAndJobTest extends TestBase {
 
 
                         .when()
-                        .put()
+                        .put("https://reqres.in/api/users/2")
 
                         .then()
                         .log().status()
@@ -59,7 +66,7 @@ public class LombokNameAndJobTest extends TestBase {
                         .body(bodyParams)
 
                         .when()
-                        .put()
+                        .put("https://reqres.in/api/users/2")
 
                         .then()
                         .log().status()
@@ -84,7 +91,7 @@ public class LombokNameAndJobTest extends TestBase {
                         .body(bodyParams)
 
                         .when()
-                        .put()
+                        .put("https://reqres.in/api/users/2")
 
                         .then()
                         .log().status()
@@ -110,7 +117,7 @@ public class LombokNameAndJobTest extends TestBase {
                         .body(bodyParams)
 
                         .when()
-                        .put()
+                        .put("https://reqres.in/api/users/2")
 
                         .then()
                         .log().status()
